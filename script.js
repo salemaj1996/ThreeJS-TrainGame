@@ -13,6 +13,7 @@ var rails = [];
 var normals = [];
 var collidableMeshList = [];
 var draggableObjects = [];
+var score;
 
 // global paramaters for different rendering options
 var params = {
@@ -86,6 +87,8 @@ function init() {
     enemyTrains = [];
     enemyTrainsPath = [];
     enemyTrainSpeed = [];
+
+    score = 0;
     // Set up lights
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
 
@@ -189,6 +192,42 @@ function init() {
 
 }
 init()
+function reset() {
+    cur_curve = 0;
+    cur_curves = [];
+    normals = [];
+    params.speed = 10
+    switch_curve = false;
+    switched = false;
+    next_curve = 0;
+    time = 0;
+    looptime = 12 * 200;
+    t;
+    time_increments = [];
+    times = [];
+    distances = [];
+
+    score = 0;
+    enemyTrainSpeed.forEach(e => {
+        e.t = 0;
+    })
+    loopEnemyTrains()
+    loopEnemyTrains()
+
+    cur_curveSegments = Math.round(params.CurveSegments);
+    temp_curveSegments = Math.round(params.CurveSegments);
+    drawCurves(cur_curveSegments);
+    computeNormals(cur_curveSegments);
+    computerTimeIncrements();
+    drawRail(cur_curveSegments);
+    t = (time % looptime) / looptime;
+    cur_curves = [];
+    cur_curves.push(cur_curve);
+    times = [];
+    times.push(t);
+    updateTrainPosition(train)
+    updateTrainOrientaion(train)
+}
 function render() {
     drawCurves(params.CurveSegments);
     computeNormals(params.CurveSegments);
@@ -208,6 +247,8 @@ function render() {
             updateTrainOrientaion(train)
 
         if (t >= 0.987 && !switched) {
+            score += 250;
+            document.getElementById("score").getElementsByTagName("span")[0].innerHTML = score;
             switch_curve = true;
             next_curve += 1;
             if (next_curve == CPlist.length) {
@@ -235,6 +276,15 @@ function render() {
             }
         }
         loopEnemyTrains()
+
+        var trainBox = new THREE.Box3().setFromObject(train.meshes[0]);
+        collidableMeshList.forEach(collidable => {
+            collidableBox = new THREE.Box3().setFromObject(collidable);
+            if (trainBox.intersectsBox(collidableBox)) {
+                params.start = false;
+                showResult();
+            }
+        })
     }
 
     if (params.TrainView == true) {
@@ -249,6 +299,13 @@ const playButton = document.getElementById("play-button");
 const resetButton = document.getElementById("reset-button");
 
 playButton.addEventListener("click", function () {
+    params.start = true
+    document.getElementById("controls").style.display = 'none';
+    document.getElementById("result").style.display = 'block';
+});
+
+resetButton.addEventListener("click", function () {
+    reset();
     params.start = true
     document.getElementById("controls").style.display = 'none';
     document.getElementById("result").style.display = 'block';
@@ -269,3 +326,12 @@ window.addEventListener("keydown", function (event) {
       return;
     }
   });
+
+  function showResult() {
+    document.getElementById("controls").style.display = 'block';
+    document.getElementById("final-score").getElementsByTagName("span")[0].innerHTML = score;
+    document.getElementById("final-score").style.display = 'block';
+    document.getElementById("result").style.display = 'none';
+    playButton.style.display = "none";
+    resetButton.style.display = "block";
+  }

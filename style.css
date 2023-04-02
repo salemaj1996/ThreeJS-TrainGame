@@ -59,18 +59,29 @@ button {
     z-index: 10;
 }
 
-#result {
+#result{
     position: absolute;
     width: 180px;
-    bottom: 50px;
-    left: 50px;
+    bottom: 25px;
+    left: 25px;
     font-size: 14px;
     line-height: 150%;
     background-color: rgba(0, 0, 0, 0.2);
-    padding: 15px 20px;
+    padding: 10px 15px;
     z-index: 10;
 }
+#final-score {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 10px 15px;
+    z-index: 10;
+    margin-top: 150px;
+}
 
-#result #speed span {
+#result span, #final-score span {
     color:rgba(255, 242, 0)
 }
