@@ -43,12 +43,15 @@ class EnemyTrain {
         nose.rotation.x = Math.PI / 2;
         nose.position.z = +23;
         nose.position.y = 10;
+        nose.castShadow = true;
 
         var cabin = new THREE.Mesh(cabinGeommetry, trainBodyMaterial);
         cabin.position.y = 14;
+        cabin.castShadow = true;
 
         var chimney = new THREE.Mesh(chimneyGeommetry, trainDetailMaterial);
         chimney.position.set(0, 18, 23);
+        chimney.castShadow = true;
 
         var smallWheelRear = new THREE.Mesh(wheelGeommetry, trainDetailMaterial);
         smallWheelRear.rotation.y = Math.PI / 2;
@@ -83,6 +86,7 @@ class EnemyTrain {
             car.position.z = car.position.z - i*35;
             train.add(car);
         }
+        train.castShadow = true;
         this.meshes.push(train);
         world.addObject(train);
         collidableMeshList.push(train);
@@ -119,7 +123,7 @@ class EnemyTrain {
 
         var boxMesh = new THREE.Mesh(boxGeometry, this.material);
         boxMesh.position.y = 10;
-
+        boxMesh.castShadow = true;
         // wheels
         var wheelGeometry = new THREE.CylinderGeometry(5, 5, 5, 12);
         var wheelMesh1 = new THREE.Mesh(wheelGeometry, this.material);
@@ -158,7 +162,7 @@ class EnemyTrain {
         singleGeometry.merge(wheelMesh3.geometry, wheelMesh3.matrix);
         wheelMesh4.updateMatrix();
         singleGeometry.merge(wheelMesh4.geometry, wheelMesh4.matrix);
-
+        singleMesh.castShadow = true;
         return singleMesh;
     }
 }

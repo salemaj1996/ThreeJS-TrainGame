@@ -40,7 +40,7 @@ class Tree {
     }
     updatePosition () {
         const treeBox = new THREE.Box3().setFromObject(this.tree);
-        rails.forEach(rail => {
+        rails.concat(enemyRails).forEach(rail => {
             var collidableBox = new THREE.Box3().setFromObject(rail);
             if (treeBox.intersectsBox(collidableBox)) {
                 this.tree.position.x = rail.position.x + 30 > 290 ? rail.position.x - 30 : rail.position.x + 30;

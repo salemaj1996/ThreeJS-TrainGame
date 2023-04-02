@@ -54,12 +54,15 @@ class Train {
        
         nose.rotation.x = Math.PI / 2;
         nose.position.z = +23;
+        nose.castShadow = true;
 
         var cabin = new THREE.Mesh(cabinGeommetry, trainBodyMaterial);
         cabin.position.y = 4;
+        cabin.castShadow = true;
 
         var chimney = new THREE.Mesh(chimneyGeommetry, trainDetailMaterial);
         chimney.position.set(0, 8, +23);
+        chimney.castShadow = true;
 
         var smallWheelRear = new THREE.Mesh(wheelGeommetry, trainDetailMaterial);
         smallWheelRear.rotation.y = Math.PI / 2;
@@ -90,6 +93,7 @@ class Train {
         train.add(nose, cabin, chimney, smallWheelRear, bigWheel, smokeGroup)
 
         train.add(this.camera);
+        train.castShadow = true;
         this.meshes.push(train);
         world.addObject(train);
     }
@@ -121,6 +125,7 @@ class Train {
 
         var boxMesh = new THREE.Mesh(boxGeometry, this.material);
         boxMesh.position.y = 10;
+        boxMesh.castShadow = true;
 
         // wheels
         var wheelGeometry = new THREE.CylinderGeometry(5, 5, 5, 12);
@@ -160,7 +165,7 @@ class Train {
         singleGeometry.merge(wheelMesh3.geometry, wheelMesh3.matrix);
         wheelMesh4.updateMatrix();
         singleGeometry.merge(wheelMesh4.geometry, wheelMesh4.matrix);
-
+        singleMesh.castShadow = true;
         this.meshes.push(singleMesh);
         this.world.addObject(singleMesh);
     }

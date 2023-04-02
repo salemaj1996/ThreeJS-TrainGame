@@ -51,6 +51,7 @@ var train;
 var enemyTrains;
 var enemyTrainsPath;
 var enemyTrainSpeed;
+var enemyRails = [];
 
 const islandWidth = window.innerWidth > 1200 ? 1000 : 600;
 // -- control points
@@ -73,7 +74,19 @@ function init() {
         speed: 10,
         speedMax: 35,
         speedMin: 10,
-        TrainView: false
+        TrainView: false,
+        Bspline: true,
+        addFog: function() {
+            var fogColor = new THREE.Color(0xffffff);
+            trainWorld.scene.background = fogColor;
+            trainWorld.scene.fog = new THREE.Fog(fogColor, 0.0005, 900);
+        },
+        addCar: function() {
+        train.addCar();
+        },
+        removeCar: function() {
+        train.removeCar();
+        }
     };
     switch_curve = false;
     switched = false;
@@ -189,9 +202,10 @@ function init() {
     tree_2.updatePosition();
     // Start
     trainWorld.renderer.setAnimationLoop(render);
-
+    trainWorld.controls.enabled = false;
 }
 init()
+setupUI()
 function reset() {
     cur_curve = 0;
     cur_curves = [];
@@ -211,6 +225,8 @@ function reset() {
     enemyTrainSpeed.forEach(e => {
         e.t = 0;
     })
+    loopEnemyTrains()
+    loopEnemyTrains()
     loopEnemyTrains()
     loopEnemyTrains()
 
@@ -312,6 +328,7 @@ resetButton.addEventListener("click", function () {
 });
 
 window.addEventListener("keydown", function (event) {
+    if (params.start == false) return;
     if (event.key == "w") {
         console.log(params.speed, params.speedMax)
       if(params.speed == params.speedMax) return;
@@ -332,6 +349,7 @@ window.addEventListener("keydown", function (event) {
     document.getElementById("final-score").getElementsByTagName("span")[0].innerHTML = score;
     document.getElementById("final-score").style.display = 'block';
     document.getElementById("result").style.display = 'none';
+    document.getElementById("speed").getElementsByTagName("span")[0].innerHTML = 1;
     playButton.style.display = "none";
     resetButton.style.display = "block";
   }

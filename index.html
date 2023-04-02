@@ -12,11 +12,11 @@
 <body>
     <div id="controls">
         <div id="instructions">
-            - Цель игры состоит в том, чтобы синий поезд проехал как можно больше кругов, не сталкиваясь с другими
+            - Цель игры состоит в том, чтобы красный поезд проехал как можно больше кругов, не сталкиваясь с другими
             поездами.
             <br>
             - Поезд не может остановиться, поэтому вы можете только контролировать его скорость. Скорость меняется с
-            помощью стрелок вверх и вниз.
+            помощью кнопок <span>W</span> (быстрее) и <span>S</span> (медленнее) на клавиатуре..
         </div>
         <button id="play-button">
             <img src="images/play.png">
@@ -37,6 +37,7 @@
         </div>
     </div>
     <canvas id="myCanvas" width="300" height="200" style="background-color: #3c6cfb;"></canvas>
+    <script src="third-party/dat.gui.min.js"></script>
     <script src="third-party/three.min.js"></script>
     <script src="third-party/OrbitControls.js"></script>
     <script src="third-party/DragControls.js"></script>

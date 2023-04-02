@@ -77,8 +77,10 @@ function drawCurves(cur_curveSegments) {
 
         var curve;
 
-        //curve = new LinearCurve(CPlist[a], CPlist[b]);
+        curve = new LinearCurve(CPlist[a], CPlist[b]);
+        if (params.Bspline) {
         curve = new BsplineCurve(CPlist[a], CPlist[b], CPlist[c], CPlist[d]);
+        }
 
         var geometry = new THREE.TubeGeometry(
             curve,
@@ -180,7 +182,6 @@ function drawStaticRails(cur_curveSegments, start, end){
     var material = new THREE.MeshBasicMaterial({
         map: texture
     });
-    //var rails1 = []
     var geometry = new THREE.BoxGeometry(20, 1, 5, 1, 1, 1);
     for (var j = 0; j < cur_curveSegments; j++) {
         var rail = new THREE.Mesh(geometry, material);
@@ -193,8 +194,7 @@ function drawStaticRails(cur_curveSegments, start, end){
         rail.receiveShadow = true;
         
         trainWorld.addObject(rail);
-        //rails.push(rail);
-        //console.log(rails.push(rail));
+        enemyRails.push(rail);
     }
 }
 
@@ -331,3 +331,35 @@ function dragCallBack(event) {
 function dragEndCallBack(event) {
     trainWorld.controls.enabled = true;
 }
+
+
+
+// set up the UI
+function setupUI() {
+    const gui = new dat.GUI();
+    f1 = gui.addFolder("Точка зрения");
+    f2 = gui.addFolder("Animation");
+    controllers = [];
+  
+    // view Folder
+    f1.add(params, "TrainView").name("точка зрения поезда")
+      .onChange(function(value) {
+        if (value == false) {
+          trainWorld.controls.reset();
+          trainWorld.camera.up.set(0, 1, 0);
+          trainWorld.controls.target = new THREE.Vector3(0, 1, 0);
+          trainWorld.controls.noRotate = false;
+          trainWorld.camera.position.set(0, 700, 0);
+        }
+      })
+      .listen()
+      .onFinishChange();
+    // Animation folder
+    controllers[0] = f2
+      .add(params, "Bspline")
+      .listen()
+      .onFinishChange();
+    f2.add(params, "addFog").name("Добавьте эффект тумана");
+    f2.add(params, "addCar").name("Добавить вагон");
+    f2.add(params, "removeCar").name("Удалить вагон");
+  }
