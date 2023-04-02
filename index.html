@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Train Game</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <div id="controls">
+        <div id="instructions">
+            - Цель игры состоит в том, чтобы синий поезд проехал как можно больше кругов, не сталкиваясь с другими
+            поездами.
+            <br>
+            - Поезд не может остановиться, поэтому вы можете только контролировать его скорость. Скорость меняется с
+            помощью стрелок вверх и вниз.
+        </div>
+        <button id="play-button">
+            <img src="/images/play.png">
+        </button>
+        <button id="reset-button" style="display: none">
+            <img src="/images/reset.png">
+        </button>
+    </div>
+    <div id="result" style="display:none">
+        <div id="score">
+            SCORE: <span>0</span>
+        </div>
+        <div id="speed">
+            Скорость: <span>1</span>
+        </div>
+    </div>
+    <canvas id="myCanvas" width="300" height="200" style="background-color: #3c6cfb;"></canvas>
+    <script src="/third-party/three.min.js"></script>
+    <script src="/third-party/OrbitControls.js"></script>
+    <script src="/third-party/DragControls.js"></script>
+    <script src="/third-party/TrackballControls.js"></script>
+    <script src="/classes/Point.js"></script>
+    <script src="/classes/Tree.js"></script>
+    <script src="/classes/Train.js"></script>
+    <script src="/classes/EnemyTrain.js"></script>
+    <script src="/classes/functions.js"></script>
+    <script src="/classes/World.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
