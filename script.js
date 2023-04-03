@@ -328,16 +328,15 @@ resetButton.addEventListener("click", function () {
 });
 
 window.addEventListener("keydown", function (event) {
-    if (params.start == false) return;
+    
     if (event.key == "w") {
-        console.log(params.speed, params.speedMax)
-      if(params.speed == params.speedMax) return;
+      if(params.speed == params.speedMax || params.start == false) return;
       params.speed += 5
       document.getElementById("speed").getElementsByTagName("span")[0].innerHTML = ((params.speed - params.speedMin) / 5) + 1;
       return;
     }
     if (event.key == "s") {
-      if(params.speed == params.speedMin) return;
+      if(params.speed == params.speedMin || params.start == false) return;
       params.speed -= 5
       document.getElementById("speed").getElementsByTagName("span")[0].innerHTML = ((params.speed - params.speedMin) / 5) + 1;
       return;
