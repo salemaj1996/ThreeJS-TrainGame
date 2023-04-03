@@ -224,6 +224,7 @@ function reset() {
     score = 0;
     enemyTrainSpeed.forEach(e => {
         e.t = 0;
+        e.dt = Math.abs(e.dt)
     })
     loopEnemyTrains()
     loopEnemyTrains()
